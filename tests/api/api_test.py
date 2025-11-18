@@ -1,5 +1,4 @@
 from fastapi.testclient import TestClient
-from fastapi.responses import JSONResponse
 from api.api import app
 from api import url_shortener_route
 import pytest
