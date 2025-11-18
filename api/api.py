@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from core.environment import ALLOWED_METHODS, ALLOWED_ORIGINS
 from api import url_shortener_route
@@ -17,6 +18,13 @@ app.add_middleware(
     allow_methods=ALLOWED_METHODS,
     allow_headers=["*"],
 )
+
+@app.get("/")
+async def root():
+    return JSONResponse(
+        status_code=200,
+        content=None
+    )
 
 app.middleware("http")(api_limiter.is_allowed)
 
