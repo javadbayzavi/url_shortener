@@ -1,0 +1,10 @@
+redis
+sqlalchemy
+pytest
+fastapi
+dotenv
+testcontainers[redis]
+testcontainers[postgres]
+requests
+uvicorn
+psycopg2-binary
