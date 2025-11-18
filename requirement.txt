@@ -8,3 +8,4 @@ testcontainers[postgres]
 requests
 uvicorn
 psycopg2-binary
+httpx
