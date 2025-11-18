@@ -1,5 +1,5 @@
 from fastapi.testclient import TestClient
-from api.api import app
+from api.api import create_app
 from api import url_shortener_route
 import pytest
 
@@ -17,6 +17,7 @@ class FakeExpander:
 
 @pytest.fixture
 def client():
+    app = create_app()
     app.dependency_overrides[url_shortener_route.get_url_shortener] = lambda: FakeShortener()
     app.dependency_overrides[url_shortener_route.get_url_expander] = lambda: FakeExpander()
     client = TestClient(app)

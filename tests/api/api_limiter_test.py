@@ -1,6 +1,6 @@
 import time
 from api.api_limiter import TokenBucket, AppAPILimiter
-from api.api import app
+from api.api import create_app
 from fastapi.testclient import TestClient
 
 
@@ -33,10 +33,7 @@ def test_token_bucket_refill():
 
 def test_api_limiter_basic(monkeypatch):
     small_bucket = TokenBucket(capacity=2, rate=1.0)
-
-    monkeypatch.setattr("api.api_limiter", AppAPILimiter(small_bucket))
-
-    # app.middleware_stack = app.build_middleware_stack()
+    app = create_app(AppAPILimiter(small_bucket))
 
     client = TestClient(app)
 
