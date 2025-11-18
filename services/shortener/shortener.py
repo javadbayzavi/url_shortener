@@ -2,8 +2,9 @@ from services.cache.cache_service import cache_service
 from services.db.urL_service import url_repository
 from services.shortener.encoder import encoder
 from asyncio import Lock
+from typing import Protocol
 
-class URLShortener:
+class URLShortener(Protocol):
     def __init__(self, cache = None, repository = None):
         self.url_repository = repository if repository else url_repository
         self.cache_service = cache if cache else cache_service
