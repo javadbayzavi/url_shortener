@@ -16,10 +16,10 @@ class TokenBucket:
     def allow(self):
         current = time()
         cut_off = current - self.lat_refill
-        refilled_rate = self.tokens - cut_off * self.rate
+        refilled_rate = self.tokens + cut_off * self.rate
         self.tokens = min(refilled_rate, self.capacity)
 
-        if self.tokens > 0:
+        if self.tokens > 1:
             self.tokens -= 1
             return True
         return False
