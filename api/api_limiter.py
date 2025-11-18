@@ -27,7 +27,7 @@ class TokenBucket:
 
 class AppAPILimiter:
     def __init__(self, limiter_strategy: AppLimiterStrategy = None):
-        self.limiter = limiter_strategy if limiter_strategy else TokenBucket(2, 0.5)
+        self.limiter = limiter_strategy if limiter_strategy else TokenBucket(200, 0.5)
 
     async def is_allowed(self, request, call_next):
         allowed = self.limiter.allow()

@@ -3,6 +3,7 @@ from fastapi import Depends
 from fastapi.responses import RedirectResponse, JSONResponse
 from services.shortener.shortener import url_shortener, URLShortener
 from services.shortener.expander import url_expander, URLExpander
+from pydantic import BaseModel
 router = APIRouter(prefix="/urls")
 
 
@@ -12,12 +13,16 @@ async def get_url_shortener() -> URLShortener:
 async def get_url_expander() -> URLExpander:
     return url_expander
 
+
+class URLToShorten(BaseModel):
+    url: str
+
+
 @router.post("/shorten")
-async def shorten(url: str, service: URLShortener = Depends(get_url_shortener) ):
-    code = await service.shorten_url(url)
+async def shorten(request: URLToShorten, service: URLShortener = Depends(get_url_shortener) ):
     return JSONResponse(
         content={
-            code : code
+            "code" : await service.shorten_url(request.url)
         },
         status_code=200
     ) 
